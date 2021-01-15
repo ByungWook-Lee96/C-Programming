@@ -23,15 +23,14 @@ namespace _067_Check
             Console.Write("영어 성적 입력(정수)? ");
             eng = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("kor: {0}, mat: {1}, eng: {2}", kor, mat, eng);
+            
 
         }
 
         static int TotalSum(int kor,int mat, int eng)
         {
-            int total = 0;
-            total = kor + mat + eng;
-            return total;
+            Console.WriteLine("kor: {0}, mat: {1}, eng: {2}", kor, mat, eng);   
+            return kor + mat + eng;
         }
 
         static void Average(int total, out float average)
