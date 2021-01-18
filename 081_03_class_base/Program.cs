@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _081_03_class_base
+{
+    class Super
+    {
+        int num;
+        protected string name;
+
+        public Super(int num)
+        {
+            this.num = num;
+        }
+
+        public void PrintSuper()
+        {
+            Console.WriteLine("Super  num: {0} ", num);
+        }
+    }
+    class Sub : Super
+    {
+        String name;
+
+        public Sub(int num, string name) : base(num) // 부모클래스의 생성자 함수가 1개 이상 있으면 써줘야함
+        {
+            this.name = name;
+        }
+        public void PrintSub()
+        {
+            base.name = "Super";
+            base.PrintSuper();
+
+            Console.WriteLine("Super  name: {0} ", base.name);
+            Console.WriteLine("Sub  name: {0} ", this.name);
+
+        }
+    }
+
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Sub sub = new Sub(26, "Jack");
+            sub.PrintSub();
+        }
+    }
+}
