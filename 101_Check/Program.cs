@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _093_Check_retry
+// 093_Check를 입력제한 없이 받아라
+namespace _101_Check
 {
     class Student
     {
@@ -54,14 +56,20 @@ namespace _093_Check_retry
     }
     class Program
     {
-        static int Check(int index,Student[] student)
+        static void PrintID(Hashtable hashTable)
         {
-            for (int i = 0; i < student.Length; i++)
+            foreach(int key in hashTable.Keys)
             {
-                if(index == student[i].ID)
-                {
-                    return i;
-                }
+                Student castData = (Student)hashTable[key];
+                castData.PrintID();
+            }
+        }
+
+        static int CheckID(int id,Hashtable hashtable)
+        {
+            if (hashtable.ContainsKey(id))
+            {
+                return id;
             }
             return -1;
         }
@@ -70,42 +78,48 @@ namespace _093_Check_retry
         {
             int index;
             int selId;
-            Student[] student = new Student[3];
 
-            for (int i = 0; i < student.Length; i++)
+            Hashtable hashStudents = new Hashtable();
+            while (true)
             {
-                student[i] = new Student(); // 이것만 헷갈리지 않게
-                student[i].InputID();
-                student[i].InputKor();
-                student[i].InputMath();
-                student[i].InputEng();
+                PrintID(hashStudents);
+                Console.Write("== 성적 입력중 == (0) 나가기");
+                if (Console.ReadLine() == "0")
+                    break;
+                Student temp = new Student();
+                temp.InputID();
+                temp.InputKor();
+                temp.InputMath();
+                temp.InputEng();
 
+                hashStudents.Add(temp.ID, temp);
+                foreach (object key in hashStudents.Keys)
+                {
+                    Console.WriteLine("key: {0}, data: {1}", key, hashStudents[key]);
+                }
                 Console.WriteLine();
-
             }
             Console.Clear();
 
             while (true)
             {
-                for (int i = 0; i < student.Length; i++)
-                {
-                    student[i].PrintID();
-                }
+                PrintID(hashStudents);
                 Console.Write("학생 아이디를 입력하세요? 0은 나가기");
                 index = int.Parse(Console.ReadLine());
                 if (index == 0)
                 {
                     break;
                 }
-                selId=Check(index,student);
+                selId=CheckID(index,hashStudents);
                 if (selId >= 0)
                 {
-                    int sum = student[selId].Kor + student[selId].Math + student[selId].Eng;
-                    Console.WriteLine("국어 점수: {0}", student[selId].Kor);
-                    Console.WriteLine("수학 점수: {0}", student[selId].Math);
-                    Console.WriteLine("영어 점수: {0}", student[selId].Eng);
+                    Student selStudent = (Student)hashStudents[selId];
+                    int sum = selStudent.Kor + selStudent.Math + selStudent.Eng;
+                    Console.WriteLine("국어 점수: {0}", selStudent.Kor);
+                    Console.WriteLine("수학 점수: {0}", selStudent.Math);
+                    Console.WriteLine("영어 점수: {0}", selStudent.Eng);
                     Console.WriteLine("총점: {0}", sum);
-                    Console.WriteLine("평균: {0}", sum / 3f);
+                    Console.WriteLine("평균: {0}", (float)sum / 3f);
                 }
                 else
                 {
@@ -119,3 +133,4 @@ namespace _093_Check_retry
         }
     }
 }
+
