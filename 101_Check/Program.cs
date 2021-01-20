@@ -93,10 +93,7 @@ namespace _101_Check
                 temp.InputEng();
 
                 hashStudents.Add(temp.ID, temp);
-                foreach (object key in hashStudents.Keys)
-                {
-                    Console.WriteLine("key: {0}, data: {1}", key, hashStudents[key]);
-                }
+
                 Console.WriteLine();
             }
             Console.Clear();
